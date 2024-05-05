@@ -23,7 +23,8 @@ class Project(BaseModel):
 
 
 class Model(BaseModel):
-    project_id: PyObjectId
+    project_id: int
+    id: int
     name: str = "모델 이름"
     description: str = "모델 상세"
     created_at: datetime = Field(default_factory=datetime.now)

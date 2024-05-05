@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
-from api.models import Project
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from api.database import Database
 from api.views import project_view
 from api.routers import model
 from bson.objectid import ObjectId
+from api.schemas.project_schema import Project, CreateProject
 
 router = APIRouter()
 
@@ -20,7 +20,5 @@ async def get_project(project_id: int, db: AsyncIOMotorDatabase = Depends(Databa
 
 
 @router.post("/project", response_model=None)
-async def create_project(db: AsyncIOMotorDatabase = Depends(Database.get_database)):
-    return await project_view.create_project(db)
-
-router.include_router(model.router)
+async def create_project(project: CreateProject, db: AsyncIOMotorDatabase = Depends(Database.get_database)):
+    return await project_view.create_project(project, db)
