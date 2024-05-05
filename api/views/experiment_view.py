@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from api.models import Model
-from api.schemas.model_schema import CreateModel
+from api.schemas.experiment_schema import CreateExperiment
 from api.views import project_view
 from api.database import Database
 
@@ -22,17 +22,17 @@ async def get_models(project_id, db: AsyncIOMotorDatabase):
     return models
 
 
-async def get_all_models(db: AsyncIOMotorDatabase):
-    print("getting models")
-    models = await db['models'].find().to_list(length=20)
-    models = [Model(**model) for model in models]
-    return models
+async def get_all_experiments(db: AsyncIOMotorDatabase):
+    print("getting all experiments")
+    experiments = await db['experiments'].find().to_list(length=20)
+    experiments = [Model(**experiment) for experiment in experiments]
+    return experiments
 
 
-async def create_model(project_id: int, model: CreateModel, db: AsyncIOMotorDatabase):
+async def create_experiment(model_id: int, model: CreateExperiment, db: AsyncIOMotorDatabase):
     print("creating model...")
-    project = await project_view.get_project(project_id, db)
+    project = await project_view.get_project(model_id, db)
     model = model.model_dump()
-    model["project_id"] = project["id"]
+    model["model_id"] = project["id"]
     model['id'] = await Database.increase_counter_id('model')
     await db["models"].insert_one(model)

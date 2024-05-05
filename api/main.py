@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from api.database import Database
-from api.routers import project, model
+from api.routers import project, model, experiment
 
 
 app = FastAPI()
@@ -20,5 +20,6 @@ async def shutdown():
 async def root():
     return {"message": "hellow world!"}
 
-app.include_router(project.router, tags=['project'])
-app.include_router(model.router, prefix='/project', tags=['model'])
+app.include_router(project.router, prefix='/projects', tags=['projects'])
+app.include_router(model.router, prefix='/models', tags=['models'])
+app.include_router(experiment.router, prefix='/experiments', tags=['experiments'])

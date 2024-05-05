@@ -28,3 +28,14 @@ class Model(BaseModel):
     name: str = "모델 이름"
     description: str = "모델 상세"
     created_at: datetime = Field(default_factory=datetime.now)
+
+
+class Experiment(BaseModel):
+    model_id: int
+    id: int
+    model_version_id: str = "some model version"
+    parameters: dict = Field(default_factory=dict)
+    training_dataset: str = "some training dataset"
+    validation_dataset: str = "some validation dataset"
+    test_dataset: str = "some test dataset"
+    evaluations: dict = Field(default_factory=dict)
