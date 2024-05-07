@@ -19,6 +19,11 @@ async def get_models(project_id: int, db: AsyncIOMotorDatabase = Depends(Databas
     return await model_view.get_models(project_id, db)
 
 
+@router.get("/model-id/{model_id}", response_model=Model)
+async def get_model(model_id: int, db: AsyncIOMotorDatabase = Depends(Database.get_database)):
+    return await model_view.get_model(model_id, db)
+
+
 @router.post("/project-id/{project_id}", response_model=None)
 async def create_model(project_id: int, model: CreateModel, db: AsyncIOMotorDatabase = Depends(Database.get_database)):
     return await model_view.create_model(project_id, model, db)

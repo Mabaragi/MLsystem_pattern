@@ -39,3 +39,4 @@ class Experiment(BaseModel):
     validation_dataset: str = "some validation dataset"
     test_dataset: str = "some test dataset"
     evaluations: dict = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=datetime.now)

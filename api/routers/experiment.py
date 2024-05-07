@@ -10,13 +10,14 @@ router = APIRouter()
 
 
 @router.get("/all", response_model=list[Experiment])
-async def get_all_models(db: AsyncIOMotorDatabase = Depends(Database.get_database)):
+async def get_all_experiments(db: AsyncIOMotorDatabase = Depends(Database.get_database)):
     return await experiment_view.get_all_experiments(db)
 
 
 @router.get("/model-id/{model_id}", response_model=list[Experiment])
-async def get_models(model_id: int, db: AsyncIOMotorDatabase = Depends(Database.get_database)):
-    return await experiment_view.get_models(model_id, db)
+async def get_experiments(model_id: int, db: AsyncIOMotorDatabase = Depends(Database.get_database)):
+    return await experiment_view.get_experiments(model_id, db)
+    pass
 
 
 @router.post("/model-id/{model_id}", response_model=None)

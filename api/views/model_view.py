@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from api.models import Model
 from api.schemas.model_schema import CreateModel
@@ -20,6 +21,13 @@ async def get_models(project_id, db: AsyncIOMotorDatabase):
     ]).to_list(length=20)
     models = [Model(**model) for model in models]
     return models
+
+
+async def get_model(model_id: int, db: AsyncIOMotorDatabase):
+    model = await db['models'].find_one({"id": model_id})
+    if model is None:
+        raise HTTPException(status_code=404, detail="Model Not Found")
+    return model
 
 
 async def get_all_models(db: AsyncIOMotorDatabase):

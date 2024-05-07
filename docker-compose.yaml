@@ -18,7 +18,6 @@ services:
       - ./mongo-data:/data/db
     ports:
       - "27017:27017" # 호스트 머신의 27017번 포트를 docker의 27017번 포트로 연결
-
   mongo-express:
     image: mongo-express
     container_name: mongo-express
